@@ -28,24 +28,33 @@ model User {
 }
 
 model Product {
-  id            Int      @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   name          String
   description   String
   price         Float
   stock         Int
-  imageUrl      String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
-  category      Category?    @relation(fields: [categoryId], references: [id])
+  category      Category?     @relation(fields: [categoryId], references: [id])
   categoryId    Int?
 
-  subCategory   SubCategory? @relation(fields: [subCategoryId], references: [id])
+  subCategory   SubCategory?  @relation(fields: [subCategoryId], references: [id])
   subCategoryId Int?
 
   cartItems     CartItem[]
   orderItems    OrderItem[]
+
+  images        ProductImage[]  // 🔥 Add this
 }
+
+model ProductImage {
+  id        Int     @id @default(autoincrement())
+  url       String
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+}
+
 
 model Category {
   id           Int           @id @default(autoincrement())
