@@ -1,0 +1,3 @@
+make admin a protected route
+make a admin page
+then make adminDashboard where admin perfrom CRUD operations on products
