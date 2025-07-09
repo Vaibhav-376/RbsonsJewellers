@@ -2,13 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
-import path from "path";
+
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface CloudinaryUploadResult {
   public_id: string;
   secure_url: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface Category {
@@ -97,117 +98,128 @@ const AdminPage = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 flex flex-col gap-4 max-w-xl mx-auto">
-      <input
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        placeholder="Name"
-        className="border p-2 rounded"
-      />
-      <input
-        type="text"
-        name="description"
-        value={formData.description}
-        onChange={handleChange}
-        placeholder="Description"
-        className="border p-2 rounded"
-      />
-      <input
-        type="number"
-        name="price"
-        value={formData.price}
-        onChange={handleChange}
-        placeholder="Price"
-        className="border p-2 rounded"
-        min="0"
-      />
-      <input
-        type="number"
-        name="stock"
-        value={formData.stock}
-        onChange={handleChange}
-        placeholder="Stock"
-        className="border p-2 rounded"
-        min="0"
-      />
-
-      <select
-        name="category"
-        value={formData.category}
-        onChange={handleChange}
-        className="border p-2 rounded"
-      >
-        <option value="">Select Category</option>
-        {categories.map((cat) => (
-          <option key={cat.id} value={cat.name}>
-            {cat.name}
-          </option>
-        ))}
-      </select>
-
-      <select
-        name="subCategory"
-        value={formData.subCategory}
-        onChange={handleChange}
-        className="border p-2 rounded"
-      >
-        <option value="">Select Subcategory</option>
-        {subCategories
-          .filter((sub) => {
-            const selectedCat = categories.find((c) => c.name === formData.category);
-            return selectedCat && sub.categoryId === selectedCat.id;
-          })
-          .map((sub) => (
-            <option key={sub.id} value={sub.name}>
-              {sub.name}
-            </option>
-          ))}
-      </select>
-
-      <CldUploadWidget
-        uploadPreset="preset" // Replace with your actual preset name
-        options={{
-          sources: ["local", "camera", "google_drive"],
-          multiple: true,
-          maxFiles: 10,
-        }}
-        onSuccess={(result) => {
-          if (result.event !== "success") return;
-          const info = result.info as CloudinaryUploadResult;
-
-          setFormData((prev) => ({
-            ...prev,
-            imagePublicIds: [...prev.imagePublicIds, info.secure_url],
-          }));
-        }}
-      >
-        {({ open }) => (
-          <button
-            type="button"
-            onClick={() => open()}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Upload Product Images
-          </button>
-        )}
-      </CldUploadWidget>
-
-      {/* Show image previews */}
-      <div className="grid grid-cols-3 gap-2">
-        {formData.imagePublicIds.map((url, idx) => (
-          <img key={idx} src={url} alt={`Product ${idx}`} className="w-full h-32 object-cover rounded" />
-        ))}
+    <>
+      <div className="flex justify-end mr-4">
+        <Link href="/admin/AddCategory"><button
+          type="submit"
+          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded mt-4">
+          Add Category
+        </button></Link>
       </div>
 
-      <button
-        type="submit"
-        className="bg-green-600 text-white px-4 py-2 rounded"
-      >
-        Submit Product
-      </button>
-    </form>
+      <form onSubmit={handleSubmit} className="p-4 flex flex-col gap-4 max-w-xl mx-auto">
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="Name"
+          className="border p-2 rounded"
+        />
+        <input
+          type="text"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder="Description"
+          className="border p-2 rounded"
+        />
+        <input
+          type="number"
+          name="price"
+          value={formData.price}
+          onChange={handleChange}
+          placeholder="Price"
+          className="border p-2 rounded"
+          min="0"
+        />
+        <input
+          type="number"
+          name="stock"
+          value={formData.stock}
+          onChange={handleChange}
+          placeholder="Stock"
+          className="border p-2 rounded"
+          min="0"
+        />
+
+        <select
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          className="border p-2 rounded"
+        >
+          <option value="">Select Category</option>
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.name}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
+
+        <select
+          name="subCategory"
+          value={formData.subCategory}
+          onChange={handleChange}
+          className="border p-2 rounded"
+        >
+          <option value="">Select Subcategory</option>
+          {subCategories
+            .filter((sub) => {
+              const selectedCat = categories.find((c) => c.name === formData.category);
+              return selectedCat && sub.categoryId === selectedCat.id;
+            })
+            .map((sub) => (
+              <option key={sub.id} value={sub.name}>
+                {sub.name}
+              </option>
+            ))}
+        </select>
+
+        <CldUploadWidget
+          uploadPreset="preset"
+          options={{
+            sources: ["local", "camera", "google_drive"],
+            multiple: true,
+            maxFiles: 10,
+          }}
+          onSuccess={(result) => {
+            if (result.event !== "success") return;
+            const info = result.info as CloudinaryUploadResult;
+
+            setFormData((prev) => ({
+              ...prev,
+              imagePublicIds: [...prev.imagePublicIds, info.secure_url],
+            }));
+          }}
+        >
+          {({ open }) => (
+            <button
+              type="button"
+              onClick={() => open()}
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Upload Product Images
+            </button>
+          )}
+        </CldUploadWidget>
+
+        {/* Show image previews */}
+        <div className="grid grid-cols-3 gap-2">
+          {formData.imagePublicIds.map((url, idx) => (
+            <img key={idx} src={url} alt={`Product ${idx}`} className="w-full h-32 object-cover rounded" />
+          ))}
+        </div>
+
+        <button
+          type="submit"
+          className="bg-green-600 text-white px-4 py-2 rounded"
+        >
+          Submit Product
+        </button>
+      </form>
+    </>
+
   );
 };
 
