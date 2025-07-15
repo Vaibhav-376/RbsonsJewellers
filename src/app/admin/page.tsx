@@ -5,6 +5,7 @@ import { CldUploadWidget } from "next-cloudinary";
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 interface CloudinaryUploadResult {
   public_id: string;
@@ -207,7 +208,7 @@ const AdminPage = () => {
         {/* Show image previews */}
         <div className="grid grid-cols-3 gap-2">
           {formData.imagePublicIds.map((url, idx) => (
-            <img key={idx} src={url} alt={`Product ${idx}`} className="w-full h-32 object-cover rounded" />
+            <Image key={idx} src={url} alt={`Product ${idx}`} className="w-full h-32 object-cover rounded" />
           ))}
         </div>
 

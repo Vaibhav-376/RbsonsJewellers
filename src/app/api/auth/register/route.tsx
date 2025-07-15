@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import registerSchema from "./schema"; // Zod schema
-import { prisma } from "../../../../../prisma/client";
+import prisma from "../../../../../prisma/client"
 import bcrypt from "bcryptjs";
 
 

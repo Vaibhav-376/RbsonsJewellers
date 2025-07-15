@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "../../../../../prisma/client";
+import prisma from "../../../../../prisma/client"
 import bcrypt from "bcryptjs";
 import { signToken } from "@/lib/jwt"; // helper to sign JWT
 
