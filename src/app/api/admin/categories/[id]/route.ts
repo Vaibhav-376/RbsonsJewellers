@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../../prisma/client";
 
+// Correct type signature
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
