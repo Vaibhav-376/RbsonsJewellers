@@ -3,9 +3,9 @@ import prisma from "../../../../../../prisma/client";
 
 export async function PUT(
   request: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await context.params;
+  const { id } = params;
   const data = await request.json();
 
   const updatedCategory = await prisma.category.update({
@@ -21,9 +21,9 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await context.params;
+  const { id } = params;
 
   const deletedCategory = await prisma.category.delete({
     where: { id: Number(id) },
