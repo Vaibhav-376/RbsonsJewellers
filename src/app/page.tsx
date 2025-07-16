@@ -9,7 +9,7 @@ import OurServices from '@/components/OurServices';
 
 export default function Home() {
   const featureImages = [
-    { image: "/20Lakh.png", heading: "20 Lakh+ Customers", description: "Happy Customers" },
+    { image: "/lakh20.png", heading: "20 Lakh+ Customers", description: "Happy Customers" },
     { image: "/BIS_Hallmark_2.avif", heading: 'BIS Hallmark', description: "Certified Gold" },
     { image: "/15DayDelivery.png", heading: "15 Day Delivery", description: "Delivery within 15 days" },
   ];
