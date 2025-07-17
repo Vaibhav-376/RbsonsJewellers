@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../prisma/client"
+import { getUserFromRequest } from '@/lib/jwt';
 
 export async function GET() {
   const products = await prisma.product.findMany({
     include: {
       category: true,
       subCategory: true,
-      images: true, 
+      images: true,
     },
   });
 
@@ -14,6 +15,10 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const user = getUserFromRequest(request);
+  if (!user || !user.is_admin) {
+    return NextResponse.json({ error: 'Forbidden: Admins only' }, { status: 403 });
+  }
   try {
     const data = await request.json();
     const {

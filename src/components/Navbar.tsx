@@ -21,6 +21,9 @@ const Navbar = () => {
     const [searchFocused, setSearchFocused] = useState(false);
     const [activeSubmenu, setActiveSubmenu] = useState<number | null>(null);
     const [mobileActiveSubmenu, setMobileActiveSubmenu] = useState<number | null>(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userMenuOpen, setUserMenuOpen] = useState(false);
+    const [userInfo, setUserInfo] = useState<{ name?: string; email?: string } | null>(null);
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -31,6 +34,34 @@ const Navbar = () => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    // Check login status on mount
+    useEffect(() => {
+        const checkLogin = async () => {
+            try {
+                const res = await fetch("/api/auth/verifyToken", { credentials: 'include' });
+                if (res.status === 200) {
+                    setIsLoggedIn(true);
+                    const data = await res.json();
+                    setUserInfo(data.user || null);
+                } else {
+                    setIsLoggedIn(false);
+                    setUserInfo(null);
+                }
+            } catch {
+                setIsLoggedIn(false);
+                setUserInfo(null);
+            }
+        };
+        checkLogin();
+    }, []);
+
+    const handleLogout = async () => {
+        await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+        setIsLoggedIn(false);
+        setUserMenuOpen(false);
+        window.location.reload();
+    };
 
     const navItems = [
         {
@@ -252,11 +283,42 @@ const Navbar = () => {
                         </button>
 
                         {/* User Profile */}
-                        <Link href={'/profile'}><button className="relative p-2.5 rounded-xl hover:bg-purple-700/30 transition-all duration-300 hover:scale-110 active:scale-95 group">
-                            <User size={24} className="text-white group-hover:text-blue-300 transition-all duration-300 group-hover:scale-110" />
-                            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        </button>
-                        </Link>
+                        <div
+                            className="relative"
+                            onMouseEnter={() => setUserMenuOpen(true)}
+                            onMouseLeave={() => setUserMenuOpen(false)}
+                        >
+                            {isLoggedIn ? (
+                                <button
+                                    className="relative p-2.5 rounded-xl hover:bg-purple-700/30 transition-all duration-300 hover:scale-110 active:scale-95 group cursor-default"
+                                    disabled
+                                    type="button"
+                                >
+                                    <User size={24} className="text-white group-hover:text-blue-300 transition-all duration-300 group-hover:scale-110" />
+                                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                </button>
+                            ) : (
+                                <Link href={'/profile'}>
+                                    <button className="relative p-2.5 rounded-xl hover:bg-purple-700/30 transition-all duration-300 hover:scale-110 active:scale-95 group">
+                                        <User size={24} className="text-white group-hover:text-blue-300 transition-all duration-300 group-hover:scale-110" />
+                                        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    </button>
+                                </Link>
+                            )}
+                            {isLoggedIn && userMenuOpen && (
+                                <div className="absolute right-0 mt-2 w-48 bg-white text-purple-700 rounded-xl shadow-lg border border-purple-200 z-50 transition-all duration-200" style={{ top: '100%' }}>
+                                    <div className="px-4 py-2 border-b border-purple-100 text-sm font-medium text-gray-700">
+                                        {userInfo?.name || userInfo?.email || 'Account'}
+                                    </div>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full text-left px-4 py-2 font-semibold hover:bg-purple-50 rounded-b-xl transition-all duration-200"
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            )}
+                        </div>
 
                         {/* Mobile Search */}
                         <button className="md:hidden p-2.5 rounded-xl hover:bg-purple-700/30 transition-all duration-300 hover:scale-110 active:scale-95 group">
@@ -360,17 +422,33 @@ const Navbar = () => {
 
                                 {/* Auth Buttons */}
                                 <div className="pt-4 border-t border-purple-700/50">
-                                    <div className="flex flex-col space-y-3">
-                                        <button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-purple-500/30">
-                                            <div className="flex items-center justify-center space-x-2">
-                                                <User size={18} />
-                                                <span>Sign In</span>
+                                    {isLoggedIn ? (
+                                        <div className="flex flex-col space-y-3">
+                                            <div className="w-full bg-white text-purple-700 rounded-xl shadow-lg border border-purple-200 px-4 py-3 text-center mb-2">
+                                                <div className="font-medium text-gray-700 text-sm mb-1">
+                                                    {userInfo?.name || userInfo?.email || 'Account'}
+                                                </div>
+                                                <button
+                                                    onClick={handleLogout}
+                                                    className="w-full text-center px-4 py-2 font-semibold hover:bg-purple-50 rounded-xl transition-all duration-200 mt-2"
+                                                >
+                                                    Logout
+                                                </button>
                                             </div>
-                                        </button>
-                                        <button className="w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-white/20 hover:scale-105 active:scale-95">
-                                            Register Now
-                                        </button>
-                                    </div>
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-col space-y-3">
+                                            <button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-purple-500/30">
+                                                <div className="flex items-center justify-center space-x-2">
+                                                    <User size={18} />
+                                                    <span>Sign In</span>
+                                                </div>
+                                            </button>
+                                            <button className="w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-white/20 hover:scale-105 active:scale-95">
+                                                Register Now
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Quick Stats */}

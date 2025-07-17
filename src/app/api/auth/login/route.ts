@@ -26,7 +26,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }
 
-    const token = signToken({ id: user.id, email: user.email });
+    const token = signToken({ id: user.id, email: user.email, is_admin: user.is_admin });
+    // console.log("token", token);
 
     const response = NextResponse.json({ message: "Login successful" });
 
@@ -35,8 +36,9 @@ export async function POST(request: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: 60 * 60 * 24 * 7,
     });
+
 
     return response;
   } catch (err) {
@@ -44,3 +46,4 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
+
