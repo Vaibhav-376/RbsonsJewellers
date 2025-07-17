@@ -3,13 +3,24 @@ import { NextRequest } from 'next/server';
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
-export function signToken(payload: object): string {
+interface TokenPayload {
+  id: number;
+  email: string;
+  is_admin: boolean;
+}
+
+
+export function signToken(payload: TokenPayload): string {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
 }
 
-export function verifyToken(token: string) {
+export function verifyToken(token: string): TokenPayload | null {
   try {
-    return jwt.verify(token, JWT_SECRET); 
+    const decoded = jwt.verify(token, JWT_SECRET);
+    if (typeof decoded === 'object' && 'is_admin' in decoded) {
+      return decoded as TokenPayload;
+    }
+    return null;
   } catch (err) {
     console.error("Token verification failed:", err);
     return null;
@@ -17,13 +28,11 @@ export function verifyToken(token: string) {
 }
 
 
-export function getUserFromRequest(request: NextRequest) {
+export function getUserFromRequest(request: NextRequest): TokenPayload | null {
   const token = request.cookies.get('token')?.value;
   if (!token) return null;
-  const user = verifyToken(token);
-  return user || null;
+  return verifyToken(token);
 }
-
 
 export function decodedToken(token: string) {
   try {

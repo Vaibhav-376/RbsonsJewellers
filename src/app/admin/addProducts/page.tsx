@@ -208,7 +208,7 @@ const AdminPage = () => {
         {/* Show image previews */}
         <div className="grid grid-cols-3 gap-2">
           {formData.imagePublicIds.map((url, idx) => (
-            <Image key={idx} src={url} alt={`Product ${idx}`} className="w-full h-32 object-cover rounded" />
+            <Image key={idx} width={200} height={150} src={url} alt={`Product ${idx}`} className="w-full h-32 object-cover rounded" />
           ))}
         </div>
 

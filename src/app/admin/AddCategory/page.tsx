@@ -27,7 +27,7 @@ const CategorySubCategoryForm = () => {
     if (res.ok) {
       alert("Category and Subcategory added successfully!");
       setFormData({ categoryName: "", subCategoryName: "" });
-      Router.push("/admin");
+      Router.push("/admin/addProducts");
     } else {
       alert(data.error);
     }
