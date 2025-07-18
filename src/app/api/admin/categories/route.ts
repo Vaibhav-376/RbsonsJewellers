@@ -16,9 +16,12 @@ export async function POST(request: NextRequest) {
   const { categoryName, subCategoryName } = body;
 
   try {
-    let category = await prisma.category.findUnique({
+    let category = await prisma.category.findFirst({
       where: {
-        name: categoryName,
+        name: {
+          equals: categoryName,
+          mode: "insensitive",
+        },
       },
     });
 
