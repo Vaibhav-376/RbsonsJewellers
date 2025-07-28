@@ -62,6 +62,19 @@ export async function POST(request: NextRequest) {
     }
 
 
+
+    if (!existingSubCategory) {
+      existingSubCategory = await prisma.subCategory.create({
+        data: {
+          name: subCategory,
+          category: {
+            connect: { id: existingCategory.id },
+          },
+        },
+      });
+    }
+
+
     const newProduct = await prisma.product.create({
       data: {
         name,
