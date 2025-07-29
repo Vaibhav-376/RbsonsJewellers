@@ -6,6 +6,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +28,9 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Provider store={store}>
           <Navbar />
-          <main>{children}</main>
+          <main>{children}
+            <Analytics />
+          </main>
         </Provider>
       </body>
     </html>
