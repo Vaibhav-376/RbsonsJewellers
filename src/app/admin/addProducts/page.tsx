@@ -92,7 +92,7 @@ const AdminPage = () => {
         subCategory: "",
         imagePublicIds: [],
       });
-      router.push("/");
+      router.push("/admin");
     } else {
       alert(result.error);
     }
