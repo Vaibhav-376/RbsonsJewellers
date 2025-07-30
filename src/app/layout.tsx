@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
           <Navbar />
           <main>{children}
             <Analytics />
+            <SpeedInsights/>
           </main>
         </Provider>
       </body>
