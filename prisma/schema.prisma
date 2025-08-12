@@ -5,15 +5,12 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider        = "prisma-client-js"
-
+  provider = "prisma-client-js"
 }
 
-
-
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -32,24 +29,24 @@ model User {
 }
 
 model Product {
-  id            Int           @id @default(autoincrement())
-  name          String
-  description   String
-  price         Float
-  stock         Int
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  stock       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  category      Category?     @relation(fields: [categoryId], references: [id])
-  categoryId    Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int?
 
-  subCategory   SubCategory?  @relation(fields: [subCategoryId], references: [id])
+  subCategory   SubCategory? @relation(fields: [subCategoryId], references: [id])
   subCategoryId Int?
 
-  cartItems     CartItem[]
-  orderItems    OrderItem[]
+  cartItems  CartItem[]
+  orderItems OrderItem[]
 
-  images        ProductImage[]  
+  images ProductImage[]
 }
 
 model ProductImage {
@@ -59,27 +56,24 @@ model ProductImage {
   productId Int
 }
 
-
-
 model Category {
-  id           Int           @id @default(autoincrement())
-  name         String        @unique
+  id            Int           @id @default(autoincrement())
+  name          String        @unique
+  slug          String?       @unique
   subCategories SubCategory[]
-  products     Product[]
+  products      Product[]
 }
 
 model SubCategory {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   name       String
-  category   Category @relation(fields: [categoryId], references: [id])
+  slug       String?
+  category   Category  @relation(fields: [categoryId], references: [id])
   categoryId Int
-
   products   Product[]
 
-  @@unique([name, categoryId]) 
+  @@unique([name, categoryId])
 }
-
-
 
 model CartItem {
   id     Int  @id @default(autoincrement())
@@ -92,7 +86,7 @@ model CartItem {
   quantity  Int      @default(1)
   createdAt DateTime @default(now())
 
-  @@unique([userId, productId]) 
+  @@unique([userId, productId])
 }
 
 model Order {
@@ -107,7 +101,7 @@ model Order {
   paymentId Int?
 
   total     Float
-  status    String   @default("processing") 
+  status    String   @default("processing")
   createdAt DateTime @default(now())
 
   orderItems OrderItem[]
@@ -122,7 +116,7 @@ model OrderItem {
   productId Int
 
   quantity Int
-  price    Float 
+  price    Float
 }
 
 model Address {
@@ -146,8 +140,8 @@ model Payment {
   user   User @relation(fields: [userId], references: [id])
   userId Int
 
-  method        String 
-  status        String   @default("pending") 
+  method        String
+  status        String   @default("pending")
   transactionId String?  @unique
   amount        Float
   createdAt     DateTime @default(now())

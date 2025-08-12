@@ -32,9 +32,10 @@ export async function POST(request: NextRequest) {
     } = data;
 
 
-    let existingCategory = await prisma.category.findUnique({
-      where: { name: category },
+    let existingCategory = await prisma.category.findFirst({
+      where: { name: { equals: category, mode: "insensitive" } }
     });
+
 
     if (!existingCategory) {
       existingCategory = await prisma.category.create({
@@ -45,7 +46,7 @@ export async function POST(request: NextRequest) {
 
     let existingSubCategory = await prisma.subCategory.findFirst({
       where: {
-        name: subCategory,
+        name: { equals: subCategory, mode: "insensitive" },
         categoryId: existingCategory.id,
       },
     });

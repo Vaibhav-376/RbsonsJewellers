@@ -7,6 +7,14 @@ export async function GET() {
   return NextResponse.json({ categories })
 }
 
+function generateslug(text: string) {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-") // replace spaces with -
+    .replace(/[^a-z0-9-]/g, ""); // remove special chars
+}
+
 export async function POST(request: NextRequest) {
   const user = getUserFromRequest(request);
   if (!user || !user.is_admin) {
@@ -14,6 +22,10 @@ export async function POST(request: NextRequest) {
   }
   const body = await request.json();
   const { categoryName, subCategoryName } = body;
+
+
+  const categoryslug = generateslug(categoryName);
+  const subCategoryslug = generateslug(subCategoryName);
 
   try {
     let category = await prisma.category.findFirst({
@@ -29,6 +41,7 @@ export async function POST(request: NextRequest) {
       category = await prisma.category.create({
         data: {
           name: categoryName,
+          slug: categoryslug
         },
       });
     }
@@ -51,6 +64,7 @@ export async function POST(request: NextRequest) {
       data: {
         name: subCategoryName,
         categoryId: category.id,
+        slug: subCategoryslug
       },
     });
 
