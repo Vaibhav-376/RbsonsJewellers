@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
     const {
       name,
       description,
+      weight,
       price,
       stock,
       category,
@@ -80,6 +81,7 @@ export async function POST(request: NextRequest) {
       data: {
         name,
         description,
+        weight,
         price,
         stock,
         categoryId: existingCategory.id,

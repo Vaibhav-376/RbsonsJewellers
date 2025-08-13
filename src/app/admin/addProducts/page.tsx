@@ -29,6 +29,7 @@ const AdminPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    weight: "",
     price: "",
     stock: "",
     category: "",
@@ -64,6 +65,7 @@ const AdminPage = () => {
 
     const payload = {
       ...formData,
+      weight:parseInt(formData.weight, 10),
       price: parseInt(formData.price, 10),
       stock: parseInt(formData.stock, 10),
     };
@@ -86,6 +88,7 @@ const AdminPage = () => {
       setFormData({
         name: "",
         description: "",
+        weight: "",
         price: "",
         stock: "",
         category: "",
@@ -124,6 +127,15 @@ const AdminPage = () => {
           onChange={handleChange}
           placeholder="Description"
           className="border p-2 rounded"
+        />
+        <input
+          type="number"
+          name="weight"
+          value={formData.weight}
+          onChange={handleChange}
+          placeholder="Weight"
+          className="border p-2 rounded"
+          min="0"
         />
         <input
           type="number"

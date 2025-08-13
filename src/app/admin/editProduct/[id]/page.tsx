@@ -13,6 +13,7 @@ const EditProductPage = () => {
   const [product, setProduct] = useState({
     name: '',
     description: '',
+    weight:0,
     price: 0,
     stock: 0,
   });
@@ -75,6 +76,20 @@ const EditProductPage = () => {
               required
             />
           </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="weight" className="text-gray-700 mb-2">Weight</label>
+            <input
+              name="weight"
+              type="number"
+              value={product.weight}
+              onChange={handleChange}
+              placeholder="Weight"
+              className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
           <div className="flex flex-col">
             <label htmlFor="price" className="text-gray-700 mb-2">Price</label>
             <input

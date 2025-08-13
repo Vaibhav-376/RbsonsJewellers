@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 interface Product {
   id: string | number;
   name: string;
+  weight:number,
   price: number;
   category?: { name: string };
   subCategory?: { name: string };

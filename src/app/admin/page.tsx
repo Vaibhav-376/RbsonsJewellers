@@ -32,6 +32,7 @@ export interface SubCategory {
 export interface Product {
     id: string | number;
     name: string;
+    weight:number,
     price: number;
     category?: Category | null;
     subCategory?: SubCategory | null;
@@ -157,6 +158,7 @@ const Dashboard = () => {
                                             <th className="p-3 text-left border">#</th>
                                             <th className="p-3 text-left border">Name</th>
                                             <th className="p-3 text-left border">Price</th>
+                                            <th className="p-3 text-left border">Weight</th>
                                             <th className="p-3 text-left border">Category</th>
                                             <th className="p-3 text-left border">Subcategory</th>
                                             <th className="p-3 text-left border">Images</th>
@@ -171,6 +173,7 @@ const Dashboard = () => {
                                                 </td>
                                                 <td className="p-3 border font-medium">{product.name}</td>
                                                 <td className="p-3 border">₹{product.price}</td>
+                                                <td className="p-3 border">{product.weight}gm</td>
                                                 <td className="p-3 border">{product.category?.name || '-'}</td>
                                                 <td className="p-3 border">{product.subCategory?.name || '-'}</td>
                                                 <td className="p-3 border">
