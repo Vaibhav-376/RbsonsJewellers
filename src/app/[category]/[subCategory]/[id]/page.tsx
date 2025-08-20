@@ -4,19 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-const ProductDisplayByID = async ({ params }: ProductPageProps) => {
+const ProductPage = async ({ params }: ProductPageProps) => {
 
-  const id = await params.id;
-
+  const { id } = await params;
+  
   const product = await prisma.product.findUnique({
-    where: {
-      id: Number(id),
-    },
+    where: { id: Number(id) },
     include: {
       subCategory: true,
       category: true,
@@ -32,23 +30,19 @@ const ProductDisplayByID = async ({ params }: ProductPageProps) => {
     );
   }
 
-
   return ( 
     <div className="max-w-6xl mx-auto p-8">
       <div className="mb-6 text-sm text-gray-500">
         <Link href="/">Home</Link> /{" "}
-        <Link href=
-          {`/${product?.category?.slug}/${product.subCategory?.slug}`}
-        >
+        <Link href={
+          `/${product?.category?.slug}/${product.subCategory?.slug}`
+        }>
           {product.subCategory?.name}
         </Link>{" "}
-
         / <span className="text-gray-700">{product.name}</span>
       </div>
 
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-    
         <div className="flex flex-col gap-4">
           <Image
             src={product.images[0]?.url || "/placeholder.png"}
@@ -72,7 +66,6 @@ const ProductDisplayByID = async ({ params }: ProductPageProps) => {
           </div>
         </div>
 
-
         <div>
           <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
           <p className="text-lg text-gray-600 mt-2">
@@ -94,7 +87,6 @@ const ProductDisplayByID = async ({ params }: ProductPageProps) => {
               {product.subCategory?.name}
             </span>
           </div>
-
 
           <div className="mt-6 flex gap-4">
             <button className="px-6 py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 transition">
@@ -118,4 +110,4 @@ const ProductDisplayByID = async ({ params }: ProductPageProps) => {
   );
 };
 
-export default ProductDisplayByID;
+export default ProductPage;
