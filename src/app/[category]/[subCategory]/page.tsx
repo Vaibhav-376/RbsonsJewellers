@@ -1,5 +1,6 @@
 import prisma from "../../../../prisma/client";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function ProductsPage(props: {
     params: Promise<{ category: string; subCategory: string; name: string }>;
@@ -87,9 +88,13 @@ export default async function ProductsPage(props: {
                                 <span className="text-xl font-bold text-blue-600">
                                     ₹{product.price}
                                 </span>
+                                
+                                <Link href={`/${product.category?.slug}/${product.subCategory?.slug}/${product.id}`}>
                                 <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors">
                                     View Details
                                 </button>
+                                </Link>
+                                
                             </div>
                         </div>
                     </div>
