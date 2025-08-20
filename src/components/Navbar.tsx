@@ -87,11 +87,11 @@ const Navbar = () => {
             href: "/earrings",
             featured: true,
             submenu: [
-                { name: "Stud Earrings", href: "/earrings/stud" },
-                { name: "Drop Earrings", href: "/earrings/drop" },
-                { name: "Hoop Earrings", href: "/earrings/hoop" },
-                { name: "Chandelier Earrings", href: "/earrings/chandelier" },
-                { name: "Clip-on Earrings", href: "/earrings/clip-on" }
+                { name: "Stud Earrings", href: "/earrings/studs-earrings" },
+                { name: "Drop Earrings", href: "/earrings/drop-earrings" },
+                { name: "Hoop Earrings", href: "/earrings/hoop-earrings" },
+                { name: "Chandelier Earrings", href: "/earrings/chandelier-earrings" },
+                { name: "Clip-on Earrings", href: "/earrings/clip-on-earrings" }
             ]
         },
         {
@@ -99,11 +99,11 @@ const Navbar = () => {
             href: "/necklaces",
             featured: false,
             submenu: [
-                { name: "Chain Necklaces", href: "/necklaces/chain" },
-                { name: "Pearl Necklaces", href: "/necklaces/pearl" },
+                { name: "Chain Necklaces", href: "/necklaces/chain-necklace" },
+                { name: "Pearl Necklaces", href: "/necklaces/pearl-necklaces" },
                 { name: "Chokers", href: "/necklaces/chokers" },
                 { name: "Lockets", href: "/necklaces/lockets" },
-                { name: "Statement Necklaces", href: "/necklaces/statement" }
+                { name: "Statement Necklaces", href: "/necklaces/statement-necklaces" }
             ]
         },
         {
@@ -111,11 +111,11 @@ const Navbar = () => {
             href: "/bangles",
             featured: false,
             submenu: [
-                { name: "Gold Bangles", href: "/bangles/gold" },
-                { name: "Silver Bangles", href: "/bangles/silver" },
-                { name: "Diamond Bangles", href: "/bangles/diamond" },
-                { name: "Traditional Bangles", href: "/bangles/traditional" },
-                { name: "Modern Bangles", href: "/bangles/modern" }
+                { name: "Gold Bangles", href: "/bangles/gold-bangles" },
+                { name: "Silver Bangles", href: "/bangles/silver-bangles" },
+                { name: "Diamond Bangles", href: "/bangles/diamond-bangles" },
+                { name: "Traditional Bangles", href: "/bangles/traditional-bangles" },
+                { name: "Modern Bangles", href: "/bangles/modern-bangles" }
             ]
         },
         {
@@ -123,11 +123,11 @@ const Navbar = () => {
             href: "/pendant",
             featured: false,
             submenu: [
-                { name: "Diamond Pendants", href: "/pendant/diamond" },
-                { name: "Gold Pendants", href: "/pendant/gold" },
-                { name: "Religious Pendants", href: "/pendant/religious" },
-                { name: "Heart Pendants", href: "/pendant/heart" },
-                { name: "Custom Pendants", href: "/pendant/custom" }
+                { name: "Diamond Pendants", href: "/pendant/diamond-pendants" },
+                { name: "Gold Pendants", href: "/pendant/gold-pendants" },
+                { name: "Religious Pendants", href: "/pendant/religious-pendants" },
+                { name: "Heart Pendants", href: "/pendant/heart-pendants" },
+                { name: "Custom Pendants", href: "/pendant/custom-pendants" }
             ]
         },
     ];
