@@ -123,11 +123,11 @@ const Navbar = () => {
             href: "/pendant",
             featured: false,
             submenu: [
-                { name: "Diamond Pendants", href: "/pendant/diamond-pendants" },
-                { name: "Gold Pendants", href: "/pendant/gold-pendants" },
-                { name: "Religious Pendants", href: "/pendant/religious-pendants" },
-                { name: "Heart Pendants", href: "/pendant/heart-pendants" },
-                { name: "Custom Pendants", href: "/pendant/custom-pendants" }
+                { name: "Diamond Pendants", href: "/pendants/diamond-pendants" },
+                { name: "Gold Pendants", href: "/pendants/gold-pendants" },
+                { name: "Religious Pendants", href: "/pendants/religious-pendants" },
+                { name: "Heart Pendants", href: "/pendants/heart-pendants" },
+                { name: "Custom Pendants", href: "/pendants/custom-pendants" }
             ]
         },
     ];
