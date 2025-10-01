@@ -35,7 +35,6 @@ const Navbar = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    // Check login status on mount
     useEffect(() => {
         const checkLogin = async () => {
             try {
@@ -66,7 +65,7 @@ const Navbar = () => {
     const navItems = [
         {
             name: "Rings",
-            href: "/rings",
+            href: "#",
             featured: false,
             submenu: [
                 { name: "Wedding Rings", href: "/rings/wedding-rings" },
@@ -84,7 +83,7 @@ const Navbar = () => {
         },
         {
             name: "Earrings",
-            href: "/earrings",
+            href: "#",
             featured: true,
             submenu: [
                 { name: "Stud Earrings", href: "/earrings/studs-earrings" },
@@ -96,7 +95,7 @@ const Navbar = () => {
         },
         {
             name: "Necklaces",
-            href: "/necklaces",
+            href: "#",
             featured: false,
             submenu: [
                 { name: "Chain Necklaces", href: "/necklaces/chain-necklace" },
@@ -108,7 +107,7 @@ const Navbar = () => {
         },
         {
             name: "Bangles",
-            href: "/bangles",
+            href: "#",
             featured: false,
             submenu: [
                 { name: "Gold Bangles", href: "/bangles/gold-bangles" },
@@ -120,7 +119,7 @@ const Navbar = () => {
         },
         {
             name: "Pendant",
-            href: "/pendant",
+            href: "#",
             featured: false,
             submenu: [
                 { name: "Diamond Pendants", href: "/pendants/diamond-pendants" },
@@ -183,7 +182,6 @@ const Navbar = () => {
                         </Link>
                     </div>
 
-                    {/* Center: Desktop Navigation with Submenus */}
                     <nav className="hidden lg:flex items-center space-x-1">
                         {navItems.map((item, index) => (
                             <div
@@ -238,7 +236,6 @@ const Navbar = () => {
                         ))}
                     </nav>
 
-                    {/* Center: Enhanced Search Bar */}
                     <div className="hidden md:flex flex-1 max-w-2xl mx-6 justify-center lg:max-w-md">
                         <div className={`relative w-full group transition-all duration-300 ${searchFocused ? 'scale-105' : ''}`}>
                             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -260,9 +257,7 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {/* Right: Enhanced Icons */}
                     <div className="flex items-center space-x-1 sm:space-x-2">
-                        {/* Wishlist */}
                         <button className="relative p-2.5 rounded-xl hover:bg-purple-700/30 transition-all duration-300 hover:scale-110 active:scale-95 group">
                             <Heart size={22} className="text-white group-hover:text-pink-300 transition-all duration-300 group-hover:scale-110" />
                             <span className="absolute -top-1 -right-1 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold shadow-lg animate-pulse">
@@ -271,7 +266,7 @@ const Navbar = () => {
                             <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-pink-500/20 to-rose-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </button>
 
-                        {/* Shopping Bag */}
+
                         <button className="relative p-2.5 rounded-xl hover:bg-purple-700/30 transition-all duration-300 hover:scale-110 active:scale-95 group">
                             <ShoppingBag size={22} className="text-white group-hover:text-purple-300 transition-all duration-300 group-hover:scale-110" />
                             <span className="absolute -top-1 -right-1 bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold shadow-lg">
@@ -280,7 +275,6 @@ const Navbar = () => {
                             <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </button>
 
-                        {/* User Profile */}
                         <div
                             className="relative"
                             onMouseEnter={() => setUserMenuOpen(true)}
@@ -318,20 +312,16 @@ const Navbar = () => {
                             )}
                         </div>
 
-                        {/* Mobile Search */}
                         <button className="md:hidden p-2.5 rounded-xl hover:bg-purple-700/30 transition-all duration-300 hover:scale-110 active:scale-95 group">
                             <Search size={22} className="text-white group-hover:text-purple-300 transition-all duration-300" />
                         </button>
                     </div>
                 </div>
 
-                {/* Enhanced Mobile menu - FIXED SCROLLBAR VERSION */}
                 <div className={`lg:hidden transition-all duration-500 ease-out ${isOpen ? 'opacity-100 mt-4' : 'opacity-0 mt-0 pointer-events-none'
                     }`}>
-                    {/* Fixed height container with scroll */}
                     <div className={`bg-gradient-to-b from-[#31135E]/95 to-[#2A0E52]/95 backdrop-blur-lg rounded-2xl border border-purple-500/20 shadow-2xl transition-all duration-500 ${isOpen ? 'max-h-[calc(100vh-120px)]' : 'max-h-0'
                         } overflow-hidden`}>
-                        {/* Scrollable content */}
                         <div className="overflow-y-auto max-h-[calc(100vh-120px)] custom-scrollbar">
                             <nav className="p-6">
                                 {/* Mobile Search */}
