@@ -152,9 +152,7 @@ const Navbar = () => {
                 }`}
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Main navbar row */}
                 <div className="flex items-center justify-between gap-2 sm:gap-4">
-                    {/* Left: Hamburger (mobile) + Logo */}
                     <div className="flex items-center space-x-2">
                         <button
                             onClick={toggleMenu}
